@@ -1,0 +1,12 @@
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\PLCSimulator\bin\Debug\PLCSimulator.dll.config
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\PLCSimulator\bin\Debug\PLCSimulator.dll
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\PLCSimulator\bin\Debug\PLCSimulator.pdb
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\PLCSimulator\bin\Debug\EntityFramework.dll
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\PLCSimulator\bin\Debug\EntityFramework.SqlServer.dll
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\PLCSimulator\bin\Debug\EntityFramework.xml
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\PLCSimulator\bin\Debug\EntityFramework.SqlServer.xml
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\PLCSimulator\obj\Debug\PLCSimulator.csproj.AssemblyReference.cache
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\PLCSimulator\obj\Debug\PLCSimulator.csproj.CoreCompileInputs.cache
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\PLCSimulator\obj\Debug\PLCSimulator.csproj.CopyComplete
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\PLCSimulator\obj\Debug\PLCSimulator.dll
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\PLCSimulator\obj\Debug\PLCSimulator.pdb

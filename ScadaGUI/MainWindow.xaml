@@ -1,0 +1,182 @@
+﻿<Window x:Class="ScadaGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ScadaGUI"
+        mc:Ignorable="d"
+        Title="SCADA Application" Height="600" Width="1000" Closing="Window_Closing">
+    <Grid>
+        <TabControl VerticalAlignment="Top">
+            <TabItem Header="Digital Inputs">
+                <DataGrid Name="DIGrid" ItemsSource="{Binding IOContext.Instance.DigitalInputs}" IsReadOnly="True" SelectedItem="{Binding SelectedDI}" SelectionMode="Single" AutoGenerateColumns="False" Margin="10,10,10,55">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+                        <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*"/>
+                        <DataGridTextColumn Header="Scan Time (sec)" Binding="{Binding ScanTime}" Width="*"/>
+                        <DataGridTextColumn Header="Scanning" Binding="{Binding OnOffScan}" Width="*"/>
+                        <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*"/>
+                        <DataGridTemplateColumn Width="2*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
+                                        <Button Content="Continue" Height="30" Width="70" Click="ContinueDI_Click"/>
+                                        <Button Content="Pause" Height="30" Width="70" Click="PauseDI_Click"/>
+                                        <Button Content="Modify" Height="30" Width="70" Click="UpdateDI_Click"/>
+                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteDI_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Digital Outputs">
+                <DataGrid Name="DOGrid" ItemsSource="{Binding IOContext.Instance.DigitalOutputs}" IsReadOnly="True" SelectedItem="{Binding SelectedDO}" SelectionMode="Single" AutoGenerateColumns="False" Margin="10,10,10,55">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+                        <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*"/>
+                        <DataGridTextColumn Header="Initial Value" Binding="{Binding InitialValue}" Width="*"/>
+                        <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*"/>
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
+                                        <Button Content="Modify" Height="30" Width="70" Click="UpdateDO_Click"/>
+                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteDO_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Analog Inputs">
+                <DataGrid Name="AIGrid" ItemsSource="{Binding IOContext.Instance.AnalogInputs}" IsReadOnly="True" SelectedItem="{Binding SelectedAI}" SelectionMode="Single" AutoGenerateColumns="False" Margin="10,10,10,55">
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Alarming}" Value="2">
+                                    <Setter Property="Foreground" Value="Red"></Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Alarming}" Value="1">
+                                    <Setter Property="Foreground" Value="DarkGoldenrod"></Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Alarming}" Value="0">
+                                    <Setter Property="Foreground" Value="Green"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+                        <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*"/>
+                        <DataGridTextColumn Header="Scan Time (sec)" Binding="{Binding ScanTime}" Width="*"/>
+                        <DataGridTextColumn Header="Scanning" Binding="{Binding OnOffScan}" Width="*"/>
+                        <DataGridTextColumn Header="Units" Binding="{Binding Units}" Width="*"/>
+                        <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*"/>
+                        <DataGridTemplateColumn Width="2*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
+                                        <Button Content="Resume" Height="30" Width="70" Click="ContinueAI_Click"/>
+                                        <Button Content="Pause" Height="30" Width="70" Click="PauseAI_Click"/>
+                                        <Button Content="Details" Height="30" Width="70" Click="DetailsAI_Click"/>
+                                        <Button Content="Alarms" Height="30" Width="70" Click="AlarmsAI_Click"/>
+                                        <Button Content="Modify" Height="30" Width="70" Click="UpdateAI_Click"/>
+                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteAI_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Analog Outputs">
+                <DataGrid Name="AOGrid" ItemsSource="{Binding IOContext.Instance.AnalogOutputs}" IsReadOnly="True" SelectedItem="{Binding SelectedAO}" SelectionMode="Single" AutoGenerateColumns="False" Margin="10,10,10,55">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"/>
+                        <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*"/>
+                        <DataGridTextColumn Header="Units" Binding="{Binding Units}" Width="*"/>
+                        <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*"/>
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
+                                        <Button Content="Details" Height="30" Width="70" Click="DetailsAO_Click"/>
+                                        <Button Content="Modify" Height="30" Width="70" Click="UpdateAO_Click"/>
+                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteAO_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Alarms">
+                <DataGrid Name="AlarmsGrid" ItemsSource="{Binding IOContext.Instance.Alarms}" IsReadOnly="True" SelectedItem="{Binding SelectedAlarm}" SelectionMode="Single" AutoGenerateColumns="False" Margin="10,10,10,55">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Tag" Binding="{Binding TagName}" Width="*"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="*"/>
+                        <DataGridTextColumn Header="Value" Binding="{Binding Value}" Width="*"/>
+                        <DataGridTextColumn Header="Activated" Binding="{Binding Activated}" Width="*"/>
+                        <DataGridTextColumn Header="Upper Value" Binding="{Binding OnUpperVal}" Width="*"/>
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
+                                        <Button Content="Confirm" Height="30" Width="70" Click="ConfirmAlarm_Click"/>
+                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteAlarm_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Alarm History">
+                <DataGrid Name="HistoryGrid" ItemsSource="{Binding IOContext.Instance.AlarmHistories}" IsReadOnly="True" SelectedItem="{Binding SelectedHistory}" SelectionMode="Single" AutoGenerateColumns="False" Margin="10,10,10,55" VerticalAlignment="Top">
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Acknowledged}" Value="False">
+                                    <Setter Property="Background" Value="LightSalmon"></Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Acknowledged}" Value="True">
+                                    <Setter Property="Background" Value="White"></Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Variable Name" Binding="{Binding VarName}" Width="*"/>
+                        <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="*"/>
+                        <DataGridTextColumn Header="Time Stamp" Binding="{Binding TimeStamp}" Width="*" SortDirection="Ascending"/>
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
+                                        <Button Content="Confirm" Height="30" Width="70" Click="ConfirmHistory_Click"/>
+                                        <Button Content="Delete" Height="30" Width="70" Click="EraseHistory_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+        <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
+            <Button Content="Add Digital Input" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,15" Height="40" Width="170" Click="AddDI_Click"/>
+            <Button Content="Add Digital Output" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,15" Height="40" Width="170" Click="AddDO_Click"/>
+            <Button Content="Add Analog Input" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,15" Height="40" Width="170" Click="AddAI_Click"/>
+            <Button Content="Add Analog Output" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,15" Height="40" Width="170" Click="AddAO_Click"/>
+            <Button Content="Add Alarm" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,0,0,15" Height="40" Width="170" Click="AddAlarm_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
