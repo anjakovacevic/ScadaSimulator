@@ -59,46 +59,85 @@ namespace ScadaGUI
             this.DataContext = this;
         }
 
+        #region Add and Update DI
         private void AddDI_Click(object sender, RoutedEventArgs e)
         {
             // Add logic to add a digital input
-        }
+            DI_AddWindow dI_AddWindow = new DI_AddWindow(null);
+            dI_AddWindow.ShowDialog();
+            DIGrid.ItemsSource = IOContext.Instance.DigitalInputs.Local;
 
+            try
+            {
+                IOContext.Instance.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+        }
+        private void UpdateDI_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic to update digital input
+            if (SelectedTab == 0 && SelectedDI != null) 
+            {
+                DI_AddWindow updateWindow = new DI_AddWindow(SelectedDI);
+                updateWindow.ShowDialog();
+                DIGrid.ItemsSource = IOContext.Instance.DigitalInputs.Local;
+            }
+
+            try
+            {
+                IOContext.Instance.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        #endregion
+
+        #region Add and Update DO
         private void AddDO_Click(object sender, RoutedEventArgs e)
         {
             // Add logic to add a digital output
         }
+        private void UpdateDO_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic to update analog output
+        }
+        #endregion
 
+        #region Add and Update AI
         private void AddAI_Click(object sender, RoutedEventArgs e)
         {
             // Add logic to add an analog input
         }
+        private void UpdateAI_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic to update analog input
+        }
+        #endregion
 
+        #region Add and Update AO
         private void AddAO_Click(object sender, RoutedEventArgs e)
         {
             // Add logic to add an analog output
         }
+
+        private void UpdateAO_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic to update analog output
+        }
+        #endregion
 
         private void AddAlarm_Click(object sender, RoutedEventArgs e)
         {
             // Add logic to add an alarm
         }
 
-        private void ContinueDI_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to continue digital input scanning
-        }
-
-        private void PauseDI_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to pause digital input scanning
-        }
-
-        private void UpdateDI_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to update digital input
-        }
-
+        #region Delete Buttons (IO, Alarms..)
         private void DeleteIO_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult value = MessageBox.Show("Are you sure?", "Deleting Entry", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
@@ -133,6 +172,28 @@ namespace ScadaGUI
             }
         }
 
+        private void DeleteAlarm_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic to delete alarm
+        }
+
+        private void EraseHistory_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic to erase alarm history
+        }
+
+        #endregion
+
+        private void ContinueDI_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic to continue digital input scanning
+        }
+
+        private void PauseDI_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic to pause digital input scanning
+        }
+
         private void ContinueAI_Click(object sender, RoutedEventArgs e)
         {
             // Logic to resume analog input scanning
@@ -143,59 +204,31 @@ namespace ScadaGUI
             // Logic to pause analog input scanning
         }
 
-        private void DetailsAI_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to show details of analog input
-        }
-
         private void AlarmsAI_Click(object sender, RoutedEventArgs e)
         {
             // Logic to show alarms for analog input
         }
-
-        private void UpdateAI_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to update analog input
-        }
-
-        private void DetailsAO_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to show details of analog output
-        }
-
-        private void UpdateAO_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to update analog output
-        }
-
         private void ConfirmAlarm_Click(object sender, RoutedEventArgs e)
         {
             // Logic to confirm alarm
         }
-
-        private void DeleteAlarm_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to delete alarm
-        }
-
         private void ConfirmHistory_Click(object sender, RoutedEventArgs e)
         {
             // Logic to confirm alarm history
         }
 
-        private void EraseHistory_Click(object sender, RoutedEventArgs e)
+        private void DetailsAI_Click(object sender, RoutedEventArgs e)
         {
-            // Logic to erase alarm history
+            // Logic to show details of analog input
+        }
+        private void DetailsAO_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic to show details of analog output
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Save configuration or perform any necessary cleanup
         }
-        private void UpdateDO_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to update analog output
-        }
-
     }
 }
