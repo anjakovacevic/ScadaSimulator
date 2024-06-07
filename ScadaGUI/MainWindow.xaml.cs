@@ -1,4 +1,5 @@
 ﻿using DataConcentrator;
+using System;
 using System.Data.Entity;
 using System.Windows;
 
@@ -13,6 +14,15 @@ namespace ScadaGUI
         public Alarm SelectedAlarm { get; set; }
         public AlarmHistory SelectedHistory { get; set; }
 
+        private int selectedTab;
+        public int SelectedTab
+        {
+            get => selectedTab;
+            set
+            {
+                selectedTab = value;
+            }
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -38,6 +48,13 @@ namespace ScadaGUI
                     ai.Load();
                 }
             }
+
+            DIGrid.ItemsSource = IOContext.Instance.DigitalInputs.Local;
+            DOGrid.ItemsSource = IOContext.Instance.DigitalOutputs.Local;
+            AIGrid.ItemsSource = IOContext.Instance.AnalogInputs.Local;
+            AOGrid.ItemsSource = IOContext.Instance.AnalogOutputs.Local;
+            AlarmsGrid.ItemsSource = IOContext.Instance.Alarms.Local;
+            HistoryGrid.ItemsSource = IOContext.Instance.AlarmHistories.Local;
 
             this.DataContext = this;
         }
@@ -82,9 +99,38 @@ namespace ScadaGUI
             // Logic to update digital input
         }
 
-        private void DeleteDI_Click(object sender, RoutedEventArgs e)
+        private void DeleteIO_Click(object sender, RoutedEventArgs e)
         {
-            // Logic to delete digital input
+            MessageBoxResult value = MessageBox.Show("Are you sure?", "Deleting Entry", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if (value == MessageBoxResult.Yes)
+            {
+                if (SelectedTab == 0 && SelectedDI != null) 
+                {
+                    IOContext.Instance.DigitalInputs.Remove(SelectedDI);
+                }
+                else if (SelectedTab == 1 && SelectedDO != null)
+                {
+                    IOContext.Instance.DigitalOutputs.Remove(SelectedDO);
+                }
+                else if (SelectedTab == 2 && SelectedAI != null)
+                {
+                    IOContext.Instance.AnalogInputs.Remove(SelectedAI);
+                }
+                else if (SelectedTab == 3 && SelectedAO != null)
+                {
+                    IOContext.Instance.AnalogOutputs.Remove(SelectedAO);
+                }
+
+                try
+                {
+                    IOContext.Instance.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                }
+            }
         }
 
         private void ContinueAI_Click(object sender, RoutedEventArgs e)
@@ -112,11 +158,6 @@ namespace ScadaGUI
             // Logic to update analog input
         }
 
-        private void DeleteAI_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to delete analog input
-        }
-
         private void DetailsAO_Click(object sender, RoutedEventArgs e)
         {
             // Logic to show details of analog output
@@ -125,11 +166,6 @@ namespace ScadaGUI
         private void UpdateAO_Click(object sender, RoutedEventArgs e)
         {
             // Logic to update analog output
-        }
-
-        private void DeleteAO_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to delete analog output
         }
 
         private void ConfirmAlarm_Click(object sender, RoutedEventArgs e)
@@ -161,9 +197,5 @@ namespace ScadaGUI
             // Logic to update analog output
         }
 
-        private void DeleteDO_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to delete analog output
-        }
     }
 }

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="SCADA Application" Height="600" Width="1000" Closing="Window_Closing">
     <Grid>
-        <TabControl VerticalAlignment="Top">
+        <TabControl SelectedIndex="{Binding SelectedTab}" VerticalAlignment="Top">
             <TabItem Header="Digital Inputs">
                 <DataGrid Name="DIGrid" ItemsSource="{Binding IOContext.Instance.DigitalInputs}" IsReadOnly="True" SelectedItem="{Binding SelectedDI}" SelectionMode="Single" AutoGenerateColumns="False" Margin="10,10,10,55">
                     <DataGrid.Columns>
@@ -24,7 +24,7 @@
                                         <Button Content="Continue" Height="30" Width="70" Click="ContinueDI_Click"/>
                                         <Button Content="Pause" Height="30" Width="70" Click="PauseDI_Click"/>
                                         <Button Content="Modify" Height="30" Width="70" Click="UpdateDI_Click"/>
-                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteDI_Click"/>
+                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteIO_Click"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -45,7 +45,7 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
                                         <Button Content="Modify" Height="30" Width="70" Click="UpdateDO_Click"/>
-                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteDO_Click"/>
+                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteIO_Click"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -87,7 +87,7 @@
                                         <Button Content="Details" Height="30" Width="70" Click="DetailsAI_Click"/>
                                         <Button Content="Alarms" Height="30" Width="70" Click="AlarmsAI_Click"/>
                                         <Button Content="Modify" Height="30" Width="70" Click="UpdateAI_Click"/>
-                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteAI_Click"/>
+                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteIO_Click"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -109,7 +109,7 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
                                         <Button Content="Details" Height="30" Width="70" Click="DetailsAO_Click"/>
                                         <Button Content="Modify" Height="30" Width="70" Click="UpdateAO_Click"/>
-                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteAO_Click"/>
+                                        <Button Content="Delete" Height="30" Width="70" Click="DeleteIO_Click"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
