@@ -59,13 +59,25 @@ namespace ScadaGUI
             this.DataContext = this;
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            foreach (DigitalInput DI in IOContext.Instance.DigitalInputs.Local)
+            {
+                DI.Abort();
+            }
+            foreach (AnalogInput AI in IOContext.Instance.AnalogInputs.Local)
+            {
+                AI.Abort();
+            }
+            DictionaryThreads.PLCsim.Abort();
+        }
+
         #region Add and Update DI
         private void AddDI_Click(object sender, RoutedEventArgs e)
         {
             // Add logic to add a digital input
             DI_AddWindow dI_AddWindow = new DI_AddWindow(null);
             dI_AddWindow.ShowDialog();
-            // DIGrid.ItemsSource = IOContext.Instance.DigitalInputs.Local;
 
             try
             {
@@ -75,10 +87,9 @@ namespace ScadaGUI
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
             }
         }
-        private void UpdateDI_Click(object sender, RoutedEventArgs e)
+        private void Update_Click(object sender, RoutedEventArgs e)
         {
             // Logic to update digital input
             if (SelectedTab == 0 && SelectedDI != null) 
@@ -86,17 +97,16 @@ namespace ScadaGUI
                 DI_AddWindow updateWindow = new DI_AddWindow(SelectedDI);
                 updateWindow.ShowDialog();
                 DIGrid.ItemsSource = IOContext.Instance.DigitalInputs.Local;
-            }
-
-            try
-            {
-                IOContext.Instance.SaveChanges();
                 DIGrid.Items.Refresh();
             }
-            catch (Exception ex)
+            else if (SelectedTab == 2 && SelectedAI != null)
             {
-                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                AI_AddWindow updateWindow = new AI_AddWindow(SelectedAI);
+                updateWindow.ShowDialog();
+                AIGrid.ItemsSource = IOContext.Instance.AnalogInputs.Local;
+                AIGrid.Items.Refresh();
             }
+
         }
         #endregion
 
@@ -115,6 +125,18 @@ namespace ScadaGUI
         private void AddAI_Click(object sender, RoutedEventArgs e)
         {
             // Add logic to add an analog input
+            AI_AddWindow aI_AddWindow = new AI_AddWindow(null);
+            aI_AddWindow.ShowDialog();
+
+            try
+            {
+                IOContext.Instance.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
         }
         private void UpdateAI_Click(object sender, RoutedEventArgs e)
         {
@@ -229,9 +251,5 @@ namespace ScadaGUI
             // Logic to show details of analog output
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            // Save configuration or perform any necessary cleanup
-        }
     }
 }

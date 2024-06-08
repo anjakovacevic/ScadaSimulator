@@ -23,7 +23,7 @@
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
                                         <Button Content="Continue" Height="30" Width="70" Click="ContinueDI_Click"/>
                                         <Button Content="Pause" Height="30" Width="70" Click="PauseDI_Click"/>
-                                        <Button Content="Modify" Height="30" Width="70" Click="UpdateDI_Click"/>
+                                        <Button Content="Modify" Height="30" Width="70" Click="Update_Click"/>
                                         <Button Content="Delete" Height="30" Width="70" Click="DeleteIO_Click"/>
                                     </StackPanel>
                                 </DataTemplate>
@@ -86,7 +86,7 @@
                                         <Button Content="Pause" Height="30" Width="70" Click="PauseAI_Click"/>
                                         <Button Content="Details" Height="30" Width="70" Click="DetailsAI_Click"/>
                                         <Button Content="Alarms" Height="30" Width="70" Click="AlarmsAI_Click"/>
-                                        <Button Content="Modify" Height="30" Width="70" Click="UpdateAI_Click"/>
+                                        <Button Content="Modify" Height="30" Width="70" Click="Update_Click"/>
                                         <Button Content="Delete" Height="30" Width="70" Click="DeleteIO_Click"/>
                                     </StackPanel>
                                 </DataTemplate>
