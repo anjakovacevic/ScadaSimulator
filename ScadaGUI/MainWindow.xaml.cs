@@ -65,11 +65,12 @@ namespace ScadaGUI
             // Add logic to add a digital input
             DI_AddWindow dI_AddWindow = new DI_AddWindow(null);
             dI_AddWindow.ShowDialog();
-            DIGrid.ItemsSource = IOContext.Instance.DigitalInputs.Local;
+            // DIGrid.ItemsSource = IOContext.Instance.DigitalInputs.Local;
 
             try
             {
                 IOContext.Instance.SaveChanges();
+                DIGrid.Items.Refresh();
             }
             catch (Exception ex)
             {
@@ -90,6 +91,7 @@ namespace ScadaGUI
             try
             {
                 IOContext.Instance.SaveChanges();
+                DIGrid.Items.Refresh();
             }
             catch (Exception ex)
             {
@@ -163,6 +165,7 @@ namespace ScadaGUI
                 try
                 {
                     IOContext.Instance.SaveChanges();
+                    DIGrid.Items.Refresh();
                 }
                 catch (Exception ex)
                 {

@@ -28,7 +28,7 @@ namespace ScadaGUI
         public DI_AddWindow(DigitalInput digitalInput)
         { 
             InitializeComponent();         
-            this.DataContext = NewDI;
+            
             this.addrCmb.ItemsSource = new List<string> { "ADDR009", "ADDR010", "ADDR011", "ADDR012" };
 
             if (digitalInput != null)
@@ -39,11 +39,12 @@ namespace ScadaGUI
                 NewDI.Address = digitalInput.Address;
                 NewDI.ScanTime = digitalInput.ScanTime;
 
-                
                 this.addrCmb.SelectedValue = digitalInput.Address;
 
                 this.Title = "Update DI";
                 addOrUpdate = true;
+
+                this.DataContext = NewDI;
             }
             else
             {
@@ -68,17 +69,20 @@ namespace ScadaGUI
                                 di.Name = nameTxt.Text;
                                 di.Description = descTxt.Text;
                                 di.Address = addrCmb.Text;
-                                di.ScanTime = Double.Parse(scanTxt.Text);                              
+                                di.ScanTime = Double.Parse(scanTxt.Text);
+                                IOContext.Instance.Entry(di).State = System.Data.Entity.EntityState.Modified;
+                                IOContext.Instance.SaveChanges();
                             }
                         }
                     }
                     else
-                    {            
+                    {
                         // Add
-                        IOContext.Instance.DigitalInputs.Add(NewDI);
+                        DigitalInput newDI = new DigitalInput(this.nameTxt.Text, this.descTxt.Text, this.addrCmb.Text, Double.Parse(this.scanTxt.Text));
+                        IOContext.Instance.DigitalInputs.Add(newDI);
+                        IOContext.Instance.SaveChanges();
+                        newDI.Load();
                     }
-
-                    IOContext.Instance.SaveChanges();
                     this.Close();
                 }
                 catch (DbEntityValidationException dbEx)
@@ -113,12 +117,57 @@ namespace ScadaGUI
         // Error handling
         private bool ValidateInput(out string errorMessage)
         {
-            bool retVal = true;
+            bool isValid = true;
             var errors = new StringBuilder();
 
+            // Validate Name
+            if (string.IsNullOrWhiteSpace(nameTxt.Text))
+            {
+                errors.AppendLine("Name cannot be empty.");
+                isValid = false;
+                nameValTxt.Text = "Required field!";
+                nameTxt.BorderBrush = Brushes.Red;
+                nameValTxt.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                nameTxt.ClearValue(Border.BorderBrushProperty);
+                nameValTxt.Visibility = Visibility.Hidden;
+            }
+
+            // No validation needed for Description
+
+            // Validate Address
+            if (addrCmb.SelectedItem == null)
+            {
+                errors.AppendLine("Address must be selected.");
+                isValid = false;
+                addrCmb.BorderBrush = Brushes.Red;
+            }
+            else
+            {
+                addrCmb.ClearValue(Border.BorderBrushProperty);
+            }
+
+            // Validate Scan Time
+            if (!double.TryParse(scanTxt.Text, out double scanTime) || scanTime <= 0)
+            {
+                errors.AppendLine("Scan Time must be a positive number.");
+                isValid = false;
+                scanValTxt.Text = "Required field!";
+                scanTxt.BorderBrush = Brushes.Red;
+                scanValTxt.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                scanTxt.ClearValue(Border.BorderBrushProperty);
+                scanValTxt.Visibility = Visibility.Hidden;
+            }
+
             errorMessage = errors.ToString();
-            return retVal;
+            return isValid;
         }
+
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult value = MessageBox.Show("Are you sure?", "Cancel Operation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
