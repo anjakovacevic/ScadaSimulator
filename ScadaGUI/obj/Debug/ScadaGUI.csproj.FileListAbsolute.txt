@@ -26,3 +26,5 @@ D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\ScadaGUI\bin\D
 D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\ScadaGUI\obj\Debug\ScadaGUI.csproj.CopyComplete
 D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\ScadaGUI\obj\Debug\DI_AddWindow.g.cs
 D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\ScadaGUI\obj\Debug\DI_AddWindow.baml
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\ScadaGUI\obj\Debug\AI_AddWindow.g.cs
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\projekat\PSNUSproject\ScadaGUI\obj\Debug\AI_AddWindow.baml
