@@ -134,7 +134,7 @@
                                         <!--<Button Height="30" Width="30" Click="DetailsAO_Click">
                                             <Image Source="img/details.png"/>
                                         </Button>-->
-                                        <Button Height="30" Width="30" Click="UpdateAO_Click">
+                                        <Button Height="30" Width="30" Click="Update_Click">
                                             <Image Source="img/update.png"/>
                                         </Button>
                                         <Button Height="30" Width="30" Click="DeleteIO_Click">
