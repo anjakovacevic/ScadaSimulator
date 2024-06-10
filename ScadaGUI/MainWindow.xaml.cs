@@ -106,6 +106,13 @@ namespace ScadaGUI
                 AIGrid.ItemsSource = IOContext.Instance.AnalogInputs.Local;
                 AIGrid.Items.Refresh();
             }
+            else if (SelectedTab == 1 && SelectedDO != null)
+            {
+                DO_AddWindow updateWindow = new DO_AddWindow(SelectedDO);
+                updateWindow.ShowDialog();
+                DOGrid.ItemsSource = IOContext.Instance.DigitalOutputs.Local;
+                DOGrid.Items.Refresh();
+            }
 
         }
         #endregion
@@ -114,6 +121,18 @@ namespace ScadaGUI
         private void AddDO_Click(object sender, RoutedEventArgs e)
         {
             // Add logic to add a digital output
+            DO_AddWindow dO_AddWindow = new DO_AddWindow(null);
+            dO_AddWindow.ShowDialog();
+
+            try
+            {
+                IOContext.Instance.SaveChanges();
+                DOGrid.Items.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void UpdateDO_Click(object sender, RoutedEventArgs e)
         {
