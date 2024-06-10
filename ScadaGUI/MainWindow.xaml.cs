@@ -72,7 +72,7 @@ namespace ScadaGUI
             DictionaryThreads.PLCsim.Abort();
         }
 
-        #region Add and Update DI
+        #region Add all IO
         private void AddDI_Click(object sender, RoutedEventArgs e)
         {
             // Add logic to add a digital input
@@ -89,6 +89,57 @@ namespace ScadaGUI
                 MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void AddDO_Click(object sender, RoutedEventArgs e)
+        {
+            // Add logic to add a digital output
+            DO_AddWindow dO_AddWindow = new DO_AddWindow(null);
+            dO_AddWindow.ShowDialog();
+
+            try
+            {
+                IOContext.Instance.SaveChanges();
+                DOGrid.Items.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void AddAI_Click(object sender, RoutedEventArgs e)
+        {
+            // Add logic to add an analog input
+            AI_AddWindow aI_AddWindow = new AI_AddWindow(null);
+            aI_AddWindow.ShowDialog();
+
+            try
+            {
+                IOContext.Instance.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+        }
+        private void AddAO_Click(object sender, RoutedEventArgs e)
+        {
+            // Add logic to add an analog output
+            AO_AddWindow aO_AddWindow = new AO_AddWindow(null);
+            aO_AddWindow.ShowDialog();
+
+            try
+            {
+                IOContext.Instance.SaveChanges();
+                AOGrid.Items.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        #endregion
+
+        #region Update all IO
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             // Logic to update digital input
@@ -120,76 +171,6 @@ namespace ScadaGUI
                 AOGrid.ItemsSource = IOContext.Instance.AnalogOutputs.Local;
                 AOGrid.Items.Refresh();
             }
-        }
-        #endregion
-
-        #region Add and Update DO
-        private void AddDO_Click(object sender, RoutedEventArgs e)
-        {
-            // Add logic to add a digital output
-            DO_AddWindow dO_AddWindow = new DO_AddWindow(null);
-            dO_AddWindow.ShowDialog();
-
-            try
-            {
-                IOContext.Instance.SaveChanges();
-                DOGrid.Items.Refresh();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-        private void UpdateDO_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to update analog output
-        }
-        #endregion
-
-        #region Add and Update AI
-        private void AddAI_Click(object sender, RoutedEventArgs e)
-        {
-            // Add logic to add an analog input
-            AI_AddWindow aI_AddWindow = new AI_AddWindow(null);
-            aI_AddWindow.ShowDialog();
-
-            try
-            {
-                IOContext.Instance.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
-            }
-        }
-        private void UpdateAI_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to update analog input
-        }
-        #endregion
-
-        #region Add and Update AO
-        private void AddAO_Click(object sender, RoutedEventArgs e)
-        {
-            // Add logic to add an analog output
-            AO_AddWindow aO_AddWindow = new AO_AddWindow(null);
-            aO_AddWindow.ShowDialog();
-
-            try
-            {
-                IOContext.Instance.SaveChanges();
-                AOGrid.Items.Refresh();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void UpdateAO_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic to update analog output
         }
         #endregion
 
