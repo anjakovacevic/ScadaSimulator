@@ -113,7 +113,13 @@ namespace ScadaGUI
                 DOGrid.ItemsSource = IOContext.Instance.DigitalOutputs.Local;
                 DOGrid.Items.Refresh();
             }
-
+            else if (SelectedTab == 3 && SelectedAO != null)
+            {
+                AO_AddWindow updateWindow = new AO_AddWindow(SelectedAO);
+                updateWindow.ShowDialog();
+                AOGrid.ItemsSource = IOContext.Instance.AnalogOutputs.Local;
+                AOGrid.Items.Refresh();
+            }
         }
         #endregion
 
@@ -167,6 +173,18 @@ namespace ScadaGUI
         private void AddAO_Click(object sender, RoutedEventArgs e)
         {
             // Add logic to add an analog output
+            AO_AddWindow aO_AddWindow = new AO_AddWindow(null);
+            aO_AddWindow.ShowDialog();
+
+            try
+            {
+                IOContext.Instance.SaveChanges();
+                AOGrid.Items.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while saving changes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void UpdateAO_Click(object sender, RoutedEventArgs e)

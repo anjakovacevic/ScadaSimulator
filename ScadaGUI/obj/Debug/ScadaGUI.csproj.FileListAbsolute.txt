@@ -60,3 +60,5 @@ D:\Users\Anja\Desktop\Faks\4\psusu\projekat\PSNUSProject\ScadaGUI\obj\Debug\Scad
 D:\Users\Anja\Desktop\Faks\4\psusu\projekat\PSNUSProject\ScadaGUI\obj\Debug\ScadaGUI.pdb
 D:\Users\Anja\Desktop\Faks\4\psusu\projekat\PSNUSProject\ScadaGUI\obj\Debug\DO_AddWindow.g.cs
 D:\Users\Anja\Desktop\Faks\4\psusu\projekat\PSNUSProject\ScadaGUI\obj\Debug\DO_AddWindow.baml
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\PSNUSProject\ScadaGUI\obj\Debug\AO_AddWindow.g.cs
+D:\Users\Anja\Desktop\Faks\4\psusu\projekat\PSNUSProject\ScadaGUI\obj\Debug\AO_AddWindow.baml
