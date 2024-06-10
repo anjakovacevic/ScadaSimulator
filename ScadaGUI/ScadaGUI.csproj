@@ -129,6 +129,13 @@
       <Name>PLCSimulator</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\alarm.png" />
+    <Resource Include="img\continue.png" />
+    <Resource Include="img\delete.png" />
+    <Resource Include="img\pause.png" />
+    <Resource Include="img\update.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
