@@ -26,25 +26,27 @@ namespace DataConcentrator
 
         public void Load()
         {
-            if (ScanThread == null)
+            if (ScanThread == null || !ScanThread.IsAlive)
             {
                 ScanThread = new Thread(Scan);
                 ScanThread.Start();
             }
             DictionaryThreads.dict.Add(Name, ScanThread);
             OnOffScan = true;
+            pauseWaitHandle.Set(); 
         }
 
+        ManualResetEvent pauseWaitHandle = new ManualResetEvent(true);
         public void Scan()
         {
             while (true)
             {
-                Thread.Sleep((int)(ScanTime * 1000));
-
-                if (OnOffScan)
+                if (pauseWaitHandle.WaitOne(TimeSpan.FromSeconds(ScanTime)))
                 {
                     lock (locker)
                     {
+                        if (!OnOffScan) continue;
+
                         double CurrentValue = DictionaryThreads.PLCsim.GetAnalogValue(Address);
                         CurrentValue = Math.Round(CurrentValue, 2);
                         if (CurrentValue > HighLimit)
@@ -88,6 +90,7 @@ namespace DataConcentrator
         {
             DictionaryThreads.dict.Remove(Name);
             OnOffScan = false;
+            pauseWaitHandle.Reset(); 
         }
 
         public void Abort()

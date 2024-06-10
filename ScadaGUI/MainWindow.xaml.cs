@@ -259,12 +259,12 @@ namespace ScadaGUI
             }
         }
 
-        private void ContinueAI_Click(object sender, RoutedEventArgs e)
+        private void ContinueAI_Click( object sender, RoutedEventArgs e)
         {
-            // Logic to resume analog input scanning
-            if (SelectedAI.OnOffScan == false)
+            if (!SelectedAI.OnOffScan) 
             {
                 SelectedAI.Load();
+                SelectedAI.OnOffScan = true; 
                 IOContext.Instance.Entry(SelectedAI).State = System.Data.Entity.EntityState.Modified;
                 IOContext.Instance.SaveChanges();
                 AIGrid.Items.Refresh();
@@ -273,10 +273,10 @@ namespace ScadaGUI
 
         private void PauseAI_Click(object sender, RoutedEventArgs e)
         {
-            // Logic to pause analog input scanning
-            if (SelectedAI.OnOffScan)
+            if (SelectedAI.OnOffScan) 
             {
                 SelectedAI.Unload();
+                SelectedAI.OnOffScan = false;
                 IOContext.Instance.Entry(SelectedAI).State = System.Data.Entity.EntityState.Modified;
                 IOContext.Instance.SaveChanges();
                 AIGrid.Items.Refresh();
