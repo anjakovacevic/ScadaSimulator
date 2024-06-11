@@ -1,6 +1,7 @@
 ﻿using DataConcentrator;
 using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 
 namespace ScadaGUI
@@ -182,11 +183,6 @@ namespace ScadaGUI
         }
         #endregion
 
-        private void AddAlarm_Click(object sender, RoutedEventArgs e)
-        {
-            // Add logic to add an alarm
-        }
-
         #region Delete Buttons (IO, Alarms..)
         private void DeleteIO_Click(object sender, RoutedEventArgs e)
         {
@@ -225,7 +221,18 @@ namespace ScadaGUI
 
         private void DeleteAlarm_Click(object sender, RoutedEventArgs e)
         {
-            // Logic to delete alarm
+            var result = MessageBox.Show("Are you sure?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                var alarms = SelectedAlarm.Tag.Alarms.Where(al => al.Id != SelectedAlarm.Id && al.Activated).ToList();
+                SelectedAlarm.Tag.Alarming = alarms.Any(al => al.HighPriority) ? 2 : alarms.Any() ? 1 : 0;
+            }
+            IOContext.Instance.Entry(SelectedAlarm.Tag).State = System.Data.Entity.EntityState.Modified;
+            IOContext.Instance.Alarms.Remove(SelectedAlarm);
+            IOContext.Instance.SaveChanges();
+            AlarmsGrid.Items.Refresh();
+            AIGrid.Items.Refresh();
         }
 
         private void EraseHistory_Click(object sender, RoutedEventArgs e)
@@ -235,6 +242,7 @@ namespace ScadaGUI
 
         #endregion
 
+        #region Simulation continue and pause
         private void ContinueDI_Click(object sender, RoutedEventArgs e)
         {
             // Logic to continue digital input scanning
@@ -282,7 +290,14 @@ namespace ScadaGUI
                 AIGrid.Items.Refresh();
             }
         }
+        #endregion
 
+        private void AddAlarm_Click(object sender, RoutedEventArgs e)
+        {
+            // Add logic to add an alarm
+            Alarm_AddWindow addAlarm = new Alarm_AddWindow();
+            addAlarm.ShowDialog();
+        }
         private void AlarmsAI_Click(object sender, RoutedEventArgs e)
         {
             // Logic to show alarms for analog input

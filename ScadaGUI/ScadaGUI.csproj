@@ -69,6 +69,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Alarm_AddWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AO_AddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -87,6 +91,9 @@
     </Page>
     <Compile Include="AI_AddWindow.xaml.cs">
       <DependentUpon>AI_AddWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Alarm_AddWindow.xaml.cs">
+      <DependentUpon>Alarm_AddWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="AO_AddWindow.xaml.cs">
       <DependentUpon>AO_AddWindow.xaml</DependentUpon>
