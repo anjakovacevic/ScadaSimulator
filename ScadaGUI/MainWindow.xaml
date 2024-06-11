@@ -21,16 +21,16 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
-                                        <Button Height="30" Width="30" Click="ContinueDI_Click">
+                                        <Button Height="30" Width="30" Click="ContinueDI_Click" ToolTip="Continue">
                                             <Image Source="img/continue.png"/>
                                         </Button>
-                                        <Button Height="30" Width="30" Click="PauseDI_Click">
+                                        <Button Height="30" Width="30" Click="PauseDI_Click" ToolTip="Pause}">
                                             <Image Source="img/pause.png"/>
                                         </Button>
-                                        <Button Height="30" Width="30" Click="Update_Click">
+                                        <Button Height="30" Width="30" Click="Update_Click" ToolTip="Update">
                                             <Image Source="img/update.png"/>
                                         </Button>
-                                        <Button Height="30" Width="30" Click="DeleteIO_Click">
+                                        <Button Height="30" Width="30" Click="DeleteIO_Click" ToolTip="Delete">
                                             <Image Source="img/delete.png"/>
                                         </Button>
                                     </StackPanel>
@@ -52,10 +52,10 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
-                                        <Button Height="30" Width="30" Click="Update_Click">
+                                        <Button Height="30" Width="30" Click="Update_Click" ToolTip="Update">
                                             <Image Source="img/update.png"/>
                                         </Button>
-                                        <Button Height="30" Width="30" Click="DeleteIO_Click">
+                                        <Button Height="30" Width="30" Click="DeleteIO_Click" ToolTip="Delete">
                                             <Image Source="img/delete.png"/>
                                         </Button>
                                     </StackPanel>
@@ -94,22 +94,22 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
-                                        <Button Height="30" Width="30" Click="ContinueAI_Click">
+                                        <Button Height="30" Width="30" Click="ContinueAI_Click" ToolTip="Continue">
                                             <Image Source="img/continue.png"/>
                                         </Button>
-                                        <Button Height="30" Width="30" Click="PauseAI_Click">
+                                        <Button Height="30" Width="30" Click="PauseAI_Click" ToolTip="Pause">
                                             <Image Source="img/pause.png"/>
                                         </Button>
                                         <!--<Button Height="30" Width="30" Click="DetailsAI_Click">
                                             <Image Source="img/details.png"/>
                                         </Button>-->
-                                        <Button Height="30" Width="30" Click="AlarmsAI_Click">
+                                        <Button Height="30" Width="30" Click="AlarmsAI_Click" ToolTip="Alarms">
                                             <Image Source="img/alarm.png"/>
                                         </Button>
-                                        <Button Height="30" Width="30" Click="Update_Click">
+                                        <Button Height="30" Width="30" Click="Update_Click" ToolTip="Update">
                                             <Image Source="img/update.png"/>
                                         </Button>
-                                        <Button Height="30" Width="30" Click="DeleteIO_Click">
+                                        <Button Height="30" Width="30" Click="DeleteIO_Click" ToolTip="Delete">
                                             <Image Source="img/delete.png"/>
                                         </Button>
                                     </StackPanel>
@@ -134,10 +134,10 @@
                                         <!--<Button Height="30" Width="30" Click="DetailsAO_Click">
                                             <Image Source="img/details.png"/>
                                         </Button>-->
-                                        <Button Height="30" Width="30" Click="Update_Click">
+                                        <Button Height="30" Width="30" Click="Update_Click" ToolTip="Update">
                                             <Image Source="img/update.png"/>
                                         </Button>
-                                        <Button Height="30" Width="30" Click="DeleteIO_Click">
+                                        <Button Height="30" Width="30" Click="DeleteIO_Click" ToolTip="Delete">
                                             <Image Source="img/delete.png"/>
                                         </Button>
                                     </StackPanel>
@@ -160,10 +160,10 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
-                                        <Button Height="30" Width="30" Click="ConfirmAlarm_Click">
+                                        <Button Height="30" Width="30" Click="ConfirmAlarm_Click" ToolTip="Confirm alarm">
                                             <Image Source="img/confirm.png"/>
                                         </Button>
-                                        <Button Height="30" Width="30" Click="DeleteAlarm_Click">
+                                        <Button Height="30" Width="30" Click="DeleteAlarm_Click" ToolTip="Delete alarm">
                                             <Image Source="img/delete.png"/>
                                         </Button>
                                     </StackPanel>
@@ -195,10 +195,10 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="LightGray">
-                                        <Button Height="30" Width="30" Click="ConfirmHistory_Click">
+                                        <Button Height="30" Width="30" Click="ConfirmHistory_Click" ToolTip="Confirm history">
                                             <Image Source="img/confirm.png"/>
                                         </Button>
-                                        <Button Height="30" Width="30" Click="EraseHistory_Click">
+                                        <Button Height="30" Width="30" Click="EraseHistory_Click" ToolTip="Erase history">
                                             <Image Source="img/delete.png"/>
                                         </Button>
                                     </StackPanel>

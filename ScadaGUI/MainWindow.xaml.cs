@@ -56,7 +56,15 @@ namespace ScadaGUI
             AlarmsGrid.ItemsSource = IOContext.Instance.Alarms.Local;
             HistoryGrid.ItemsSource = IOContext.Instance.AlarmHistories.Local;
 
+            Input.ValueChanged += RefreshInputs;
+            // Alarm.AlarmTriggered += ActivatedAlarm;
+
             this.DataContext = this;
+        }
+        public void RefreshInputs()
+        {
+            DIGrid.Dispatcher.Invoke(() => { DIGrid.Items.Refresh(); });
+            AIGrid.Dispatcher.Invoke(() => { AIGrid.Items.Refresh(); });
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -230,21 +238,49 @@ namespace ScadaGUI
         private void ContinueDI_Click(object sender, RoutedEventArgs e)
         {
             // Logic to continue digital input scanning
+            if (SelectedDI.OnOffScan == false)
+            {
+                SelectedDI.Load();
+                IOContext.Instance.Entry(SelectedDI).State = System.Data.Entity.EntityState.Modified;
+                IOContext.Instance.SaveChanges();
+                DIGrid.Items.Refresh();
+            }
         }
 
         private void PauseDI_Click(object sender, RoutedEventArgs e)
         {
             // Logic to pause digital input scanning
+            if (SelectedDI.OnOffScan)
+            {
+                SelectedDI.Unload();
+                IOContext.Instance.Entry(SelectedDI).State = System.Data.Entity.EntityState.Modified;
+                IOContext.Instance.SaveChanges();
+                DIGrid.Items.Refresh();
+            }
         }
 
-        private void ContinueAI_Click(object sender, RoutedEventArgs e)
+        private void ContinueAI_Click( object sender, RoutedEventArgs e)
         {
-            // Logic to resume analog input scanning
+            if (!SelectedAI.OnOffScan) 
+            {
+                SelectedAI.Load();
+                SelectedAI.OnOffScan = true; 
+                IOContext.Instance.Entry(SelectedAI).State = System.Data.Entity.EntityState.Modified;
+                IOContext.Instance.SaveChanges();
+                AIGrid.Items.Refresh();
+            }
         }
 
         private void PauseAI_Click(object sender, RoutedEventArgs e)
         {
-            // Logic to pause analog input scanning
+            if (SelectedAI.OnOffScan) 
+            {
+                SelectedAI.Unload();
+                SelectedAI.OnOffScan = false;
+                IOContext.Instance.Entry(SelectedAI).State = System.Data.Entity.EntityState.Modified;
+                IOContext.Instance.SaveChanges();
+                AIGrid.Items.Refresh();
+            }
         }
 
         private void AlarmsAI_Click(object sender, RoutedEventArgs e)

@@ -21,66 +21,74 @@ namespace DataConcentrator
 
         public virtual List<Alarm> Alarms { get; set; } = new List<Alarm>();
 
-        Thread ScanThread;
+        private Thread ScanThread;
         private readonly object locker = new object();
+        private ManualResetEvent pauseWaitHandle = new ManualResetEvent(true);
 
         public void Load()
         {
-            if (ScanThread == null)
+            if (ScanThread == null || !ScanThread.IsAlive)
             {
                 ScanThread = new Thread(Scan);
                 ScanThread.Start();
             }
             DictionaryThreads.dict.Add(Name, ScanThread);
             OnOffScan = true;
+            pauseWaitHandle.Set();
         }
 
         public void Scan()
         {
             while (true)
             {
-                Thread.Sleep((int)(ScanTime * 1000));
+                pauseWaitHandle.WaitOne();
 
-                if (OnOffScan)
+                lock (locker)
                 {
-                    lock (locker)
+                    if (!OnOffScan)
                     {
-                        double CurrentValue = DictionaryThreads.PLCsim.GetAnalogValue(Address);
-                        CurrentValue = Math.Round(CurrentValue, 2);
-                        if (CurrentValue > HighLimit)
+                        pauseWaitHandle.Reset();
+                        continue;
+                    }
+
+                    double CurrentValue = DictionaryThreads.PLCsim.GetAnalogValue(Address);
+                    CurrentValue = Math.Round(CurrentValue, 2);
+
+                    if (CurrentValue > HighLimit)
+                    {
+                        Value = HighLimit;
+                    }
+                    else if (CurrentValue < LowLimit)
+                    {
+                        Value = LowLimit;
+                    }
+                    else
+                    {
+                        Value = CurrentValue;
+                        Input.Changed();
+                    }
+
+                    foreach (Alarm alarm in Alarms)
+                    {
+                        if (alarm.OnUpperVal)
                         {
-                            Value = HighLimit;
-                        }
-                        else if (CurrentValue < LowLimit)
-                        {
-                            Value = LowLimit;
+                            if (Value > alarm.Value && !alarm.Activated)
+                            {
+                                alarm.Activated = true;
+                                alarm.TriggerAlarm();
+                            }
                         }
                         else
                         {
-                            Value = CurrentValue;
-                            Input.Changed();
-                        }
-                        foreach (Alarm alarm in Alarms)
-                        {
-                            if (alarm.OnUpperVal == true)
+                            if (Value < alarm.Value && !alarm.Activated)
                             {
-                                if ((Value > alarm.Value) && !alarm.Activated)
-                                {
-                                    alarm.Activated = true;
-                                    alarm.TriggerAlarm();
-                                }
-                            }
-                            else
-                            {
-                                if ((Value < alarm.Value) && !alarm.Activated)
-                                {
-                                    alarm.Activated = true;
-                                    alarm.TriggerAlarm();
-                                }
+                                alarm.Activated = true;
+                                alarm.TriggerAlarm();
                             }
                         }
                     }
                 }
+                Thread.Sleep(TimeSpan.FromSeconds(ScanTime)); // Add this to control the scan interval
             }
         }
 
@@ -88,6 +96,7 @@ namespace DataConcentrator
         {
             DictionaryThreads.dict.Remove(Name);
             OnOffScan = false;
+            pauseWaitHandle.Reset();
         }
 
         public void Abort()
