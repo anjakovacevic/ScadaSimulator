@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataConcentrator
 {
@@ -34,7 +30,29 @@ namespace DataConcentrator
 
         public void TriggerAlarm()
         {
-            AlarmTriggered?.Invoke(this);
+            if (!Activated) 
+            {
+                Activated = true;
+                AlarmTriggered?.Invoke(this);
+                LogAlarmHistory();
+            }
+        }
+
+        private void LogAlarmHistory()
+        {
+            using (var context = IOContext.Instance) 
+            {
+                var alarmHistory = new AlarmHistory
+                {
+                    AlarmID = this.Id,
+                    VarName = this.TagName,
+                    Message = this.Message,
+                    TimeStamp = DateTime.Now,
+                    Acknowledged = false
+                };
+                context.AlarmHistories.Add(alarmHistory);
+                context.SaveChanges();
+            }
         }
     }
 }

@@ -85,7 +85,6 @@ namespace DataConcentrator
                         {
                             if (Value > alarm.Value && !alarm.Activated)
                             {
-                                alarm.Activated = true;
                                 alarm.TriggerAlarm();
                             }
                         }
@@ -93,13 +92,12 @@ namespace DataConcentrator
                         {
                             if (Value < alarm.Value && !alarm.Activated)
                             {
-                                alarm.Activated = true;
                                 alarm.TriggerAlarm();
                             }
                         }
                     }
                 }
-                Thread.Sleep(TimeSpan.FromSeconds(ScanTime)); // Add this to control the scan interval
+                Thread.Sleep(TimeSpan.FromSeconds(ScanTime));
             }
         }
 
