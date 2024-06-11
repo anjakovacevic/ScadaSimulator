@@ -23,8 +23,14 @@ namespace DataConcentrator
 
         private Thread ScanThread;
         private readonly object locker = new object();
+
+        /* ManualResetEvent is a synchronization primitive used to pause and resume threads by signaling; 
+         * when set, threads continue, and when reset, threads wait.*/
         private ManualResetEvent pauseWaitHandle = new ManualResetEvent(true);
 
+        /*The `Load` function starts a new scanning thread if it isn't already running, adds this thread
+         * to a dictionary, and enables scanning by setting `OnOffScan` to true and signaling any paused
+         * operations to continue.*/
         public void Load()
         {
             if (ScanThread == null || !ScanThread.IsAlive)
@@ -36,7 +42,12 @@ namespace DataConcentrator
             OnOffScan = true;
             pauseWaitHandle.Set();
         }
-
+        /*
+        The `Scan` function continuously monitors an analog value from a PLC simulator at intervals defined 
+        by `ScanTime`, adjusting the value to stay within specified limits (`HighLimit` and `LowLimit`). 
+        If scanning is enabled (`OnOffScan`), it locks the process to update the value and checks against 
+        alarms, triggering any that are activated by the current value.
+        */
         public void Scan()
         {
             while (true)
