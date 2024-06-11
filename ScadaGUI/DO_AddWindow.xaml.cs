@@ -21,7 +21,7 @@ namespace ScadaGUI
     /// </summary>
     public partial class DO_AddWindow : Window
     {
-        private DigitalOutput NewDI = new DigitalOutput();
+        private DigitalOutput NewDO = new DigitalOutput();
         bool addOrUpdate;
         private int currentID = -1;
 
@@ -34,17 +34,17 @@ namespace ScadaGUI
             if (digitaOutput != null)
             {
                 currentID = digitaOutput.ID;
-                NewDI.Name = digitaOutput.Name;
-                NewDI.Description = digitaOutput.Description;
-                NewDI.Address = digitaOutput.Address;
-                NewDI.Value = digitaOutput.Value;
+                NewDO.Name = digitaOutput.Name;
+                NewDO.Description = digitaOutput.Description;
+                NewDO.Address = digitaOutput.Address;
+                NewDO.Value = digitaOutput.Value;
 
                 this.addrCmb.SelectedValue = digitaOutput.Address;
 
                 this.Title = "Update DO";
                 addOrUpdate = true;
 
-                this.DataContext = NewDI;
+                this.DataContext = NewDO;
             }
             else
             {
